@@ -1,0 +1,306 @@
+#:kivy 2.3.0
+
+# Single-screen layout for the local Secure Messenger demo.
+
+MDScreen:
+    md_bg_color: 0.94, 0.96, 0.97, 1
+
+    MDScrollView:
+        id: scroll
+        do_scroll_x: False
+        do_scroll_y: True
+        bar_width: dp(4)
+        scroll_type: ["bars", "content"]
+
+        MDBoxLayout:
+            id: root_column
+            orientation: "vertical"
+            adaptive_height: True
+            size_hint_x: 1
+            padding: [dp(24), dp(28), dp(24), dp(28)]
+            spacing: dp(16)
+
+            MDCard:
+                id: card_hero
+                orientation: "vertical"
+                adaptive_height: True
+                size_hint_x: 1
+                padding: [dp(24), dp(22), dp(24), dp(22)]
+                spacing: dp(8)
+                radius: [dp(18)]
+                elevation: dp(1)
+                md_bg_color: 0.08, 0.15, 0.22, 1
+
+                MDLabel:
+                    id: lbl_title
+                    text: "Secure Messenger — AES-GCM + RSA-OAEP Demo"
+                    adaptive_height: True
+                    halign: "left"
+                    font_style: "H4"
+                    bold: True
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    text_size: self.width, None
+
+            MDCard:
+                id: card_keys
+                orientation: "vertical"
+                padding: dp(20)
+                spacing: dp(12)
+                adaptive_height: True
+                size_hint_x: 1
+                radius: [dp(16)]
+                elevation: dp(1)
+                md_bg_color: 1, 1, 1, 1
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: dp(3)
+
+                    MDLabel:
+                        text: "01  /  IDENTITY"
+                        adaptive_height: True
+                        font_style: "Caption"
+                        bold: True
+                        theme_text_color: "Custom"
+                        text_color: 0.08, 0.48, 0.43, 1
+
+                    MDLabel:
+                        text: "RSA key pair"
+                        adaptive_height: True
+                        font_style: "H6"
+                        bold: True
+                        theme_text_color: "Primary"
+
+                MDLabel:
+                    id: lbl_keys
+                    text: "RSA keys: not generated"
+                    adaptive_height: True
+                    font_style: "Body2"
+                    theme_text_color: "Secondary"
+
+                ResponsiveButtonRow:
+                    adaptive_height: True
+                    size_hint_x: 1
+                    spacing: dp(8)
+
+                    PressableButton:
+                        id: btn_gen_keys
+                        text: "Generate RSA Key Pair"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size_hint_min_x: dp(150)
+                        height: dp(46)
+                        md_bg_color: 0.08, 0.48, 0.43, 1
+                        on_release: app.generate_keys()
+
+                    PressableButton:
+                        id: btn_load_keys
+                        text: "Load Keys"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size_hint_min_x: dp(120)
+                        height: dp(46)
+                        md_bg_color: 0.89, 0.93, 0.94, 1
+                        text_color: 0.12, 0.22, 0.27, 1
+                        on_release: app.load_keys()
+
+                    PressableButton:
+                        id: btn_save_keys
+                        text: "Save Keys"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size_hint_min_x: dp(120)
+                        height: dp(46)
+                        md_bg_color: 0.89, 0.93, 0.94, 1
+                        text_color: 0.12, 0.22, 0.27, 1
+                        on_release: app.save_keys()
+
+            MDCard:
+                id: card_message
+                orientation: "vertical"
+                padding: dp(20)
+                spacing: dp(12)
+                adaptive_height: True
+                size_hint_x: 1
+                radius: [dp(16)]
+                elevation: dp(1)
+                md_bg_color: 1, 1, 1, 1
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: dp(3)
+
+                    MDLabel:
+                        text: "02  /  MESSAGE"
+                        adaptive_height: True
+                        font_style: "Caption"
+                        bold: True
+                        theme_text_color: "Custom"
+                        text_color: 0.08, 0.48, 0.43, 1
+
+                    MDLabel:
+                        text: "Compose a message"
+                        adaptive_height: True
+                        font_style: "H6"
+                        bold: True
+                        theme_text_color: "Primary"
+
+                MDTextField:
+                    id: txt_input
+                    hint_text: "Enter message..."
+                    multiline: True
+                    size_hint_y: None
+                    height: dp(150)
+                    mode: "rectangle"
+
+                ResponsiveButtonRow:
+                    adaptive_height: True
+                    size_hint_x: 1
+                    spacing: dp(8)
+
+                    PressableButton:
+                        id: btn_encrypt
+                        text: "Encrypt (Sender)"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size_hint_min_x: dp(155)
+                        height: dp(48)
+                        md_bg_color: 0.08, 0.48, 0.43, 1
+                        on_release: app.encrypt()
+
+                    PressableButton:
+                        id: btn_decrypt
+                        text: "Decrypt (Receiver)"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size_hint_min_x: dp(155)
+                        height: dp(48)
+                        md_bg_color: 0.12, 0.25, 0.34, 1
+                        on_release: app.decrypt()
+
+            MDCard:
+                id: card_output
+                orientation: "vertical"
+                padding: dp(20)
+                spacing: dp(12)
+                adaptive_height: True
+                size_hint_x: 1
+                radius: [dp(16)]
+                elevation: dp(1)
+                md_bg_color: 1, 1, 1, 1
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: dp(3)
+
+                    MDLabel:
+                        text: "03  /  INSPECT"
+                        adaptive_height: True
+                        font_style: "Caption"
+                        bold: True
+                        theme_text_color: "Custom"
+                        text_color: 0.08, 0.48, 0.43, 1
+
+                    MDLabel:
+                        text: "Result"
+                        font_style: "H6"
+                        adaptive_height: True
+                        bold: True
+                        theme_text_color: "Primary"
+
+                MDCard:
+                    orientation: "vertical"
+                    padding: dp(16)
+                    adaptive_height: True
+                    size_hint_x: 1
+                    radius: [dp(10)]
+                    elevation: 0
+                    md_bg_color: 0.95, 0.97, 0.98, 1
+
+                    MDLabel:
+                        id: lbl_output
+                        text: "—"
+                        adaptive_height: True
+                        halign: "left"
+                        font_style: "Body2"
+                        theme_text_color: "Custom"
+                        text_color: 0.16, 0.23, 0.28, 1
+                        text_size: self.width, None
+
+            MDCard:
+                id: card_files
+                orientation: "vertical"
+                padding: dp(20)
+                spacing: dp(12)
+                adaptive_height: True
+                size_hint_x: 1
+                radius: [dp(16)]
+                elevation: dp(1)
+                md_bg_color: 1, 1, 1, 1
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: dp(3)
+
+                    MDLabel:
+                        text: "04  /  FILES"
+                        adaptive_height: True
+                        font_style: "Caption"
+                        bold: True
+                        theme_text_color: "Custom"
+                        text_color: 0.08, 0.48, 0.43, 1
+
+                    MDLabel:
+                        text: "Encrypted message files"
+                        adaptive_height: True
+                        font_style: "H6"
+                        bold: True
+                        theme_text_color: "Primary"
+
+                    MDLabel:
+                        text: "Save an encrypted bundle locally, or open one to decrypt."
+                        adaptive_height: True
+                        font_style: "Body2"
+                        theme_text_color: "Secondary"
+                        text_size: self.width, None
+
+                ResponsiveButtonRow:
+                    adaptive_height: True
+                    size_hint_x: 1
+                    spacing: dp(8)
+
+                    PressableButton:
+                        id: btn_save
+                        text: "Save Message to File"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size_hint_min_x: dp(155)
+                        height: dp(46)
+                        md_bg_color: 0.89, 0.93, 0.94, 1
+                        text_color: 0.12, 0.22, 0.27, 1
+                        on_release: app.save_message()
+
+                    PressableButton:
+                        id: btn_load
+                        text: "Load Message from File"
+                        size_hint_x: 1
+                        size_hint_y: None
+                        size_hint_min_x: dp(155)
+                        height: dp(46)
+                        md_bg_color: 0.89, 0.93, 0.94, 1
+                        text_color: 0.12, 0.22, 0.27, 1
+                        on_release: app.load_message()
+
+            MDLabel:
+                id: lbl_status
+                text: ""
+                adaptive_height: True
+                halign: "center"
+                theme_text_color: "Primary"
+                font_style: "Body2"
+                text_size: self.width, None

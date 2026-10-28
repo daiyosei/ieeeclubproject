@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environment
+.venv/
+venv/
+
+# Kivy
+.kivy/
+kivy.log
+
+# Secrets — RSA keys are generated at runtime and must never be committed.
+# Keep the keys/ folder itself (via .gitkeep), ignore everything inside it.
+keys/*
+!keys/.gitkeep
+*.pem
+
+# Encrypted messages saved by the demo. Keep the msg/ folder, ignore the
+# message files inside it.
+msg/*
+!msg/.gitkeep
+
+# Legacy default location used by older versions of the demo
+encrypted_message.json
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+
+plan.md

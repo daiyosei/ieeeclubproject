@@ -1,0 +1,3 @@
+kivymd
+cryptography
+plyer
